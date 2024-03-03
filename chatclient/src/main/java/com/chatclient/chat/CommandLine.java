@@ -12,17 +12,25 @@ public class CommandLine implements ViewMessages {
 
     private Issuer issuer;
     private String localMsg = "";
+    private String userName;
 
     public CommandLine(Issuer issuer) {
         this.issuer = issuer;
     }
 
     public void init() {
-        String msg = "";
+
+        logger.info("Enter username:");
         Scanner input = new Scanner(System.in);
-        while (msg != "close-chat") {
+        userName = input.nextLine();
+        System.out.println("\n\n");
+        System.out.println("Welcome Chat!\n");
+        System.out.println("🇩​🇦​🇷​🇰​ 🇨​🇭​🇦​🇹​ ₁.₀\n");
+        System.out.print(">>> ");
+        while (localMsg != "close-chat") {
             localMsg = input.nextLine();
-            this.sendMessage(localMsg);
+            System.out.print(">>> ");
+            this.sendMessage(userName.concat("#separator#").concat(localMsg));
         }
         input.close();
     }
@@ -32,8 +40,9 @@ public class CommandLine implements ViewMessages {
     }
 
     public void addMessages(String msg) {
-        if (!localMsg.equals(msg)) {
-            logger.info(msg);
-        }
+        String[] values = msg.split("#separator#");
+        System.out.print("\n");
+        logger.info(values[0].concat(" >>> ").concat(values[1]));
+        System.out.print(">>> ");
     }
 }

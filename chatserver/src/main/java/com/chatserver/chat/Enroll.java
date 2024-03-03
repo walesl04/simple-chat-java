@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -23,16 +24,17 @@ public class Enroll implements Runnable {
         while (true) {
             try {
                 Socket client = this.server.accept();
+                String uuidChat = UUID.randomUUID().toString();
                 logger.info("NEW CLIENT CONNECTED");
 
                 Scanner input = new Scanner(client.getInputStream());
                 PrintStream output = new PrintStream(client.getOutputStream());
 
-                Receptor receptor = new Receptor(input, this.distributor);
+                Receptor receptor = new Receptor(input, this.distributor, uuidChat);
                 Thread stack = new Thread(receptor);
                 stack.start();
 
-                Issuer issuer = new Issuer(output);
+                Issuer issuer = new Issuer(output, uuidChat);
 
                 this.distributor.addIssuer(issuer);
 

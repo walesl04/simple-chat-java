@@ -10,9 +10,11 @@ public class Distributor {
         this.issuers.add(issuer);
     }
 
-    public void deliveryMessage(String msg) {
+    public void deliveryMessage(String msg, String uuid) {
         for (Issuer issuer : this.issuers) {
-            issuer.send(msg);
+            if (issuer.getUUID() != uuid) {
+                issuer.send(msg);
+            }
         }
     }
 }
