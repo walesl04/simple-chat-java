@@ -1,4 +1,4 @@
-### Chat with Scoket Java
+### Chat with Socket Java
 
 #### Preview
 
